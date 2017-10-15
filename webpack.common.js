@@ -1,7 +1,7 @@
 const webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var path = require('path');
-var WriteFilePlugin = require('write-file-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 
 const env = process.env.NODE_ENV;
 
