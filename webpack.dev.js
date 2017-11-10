@@ -2,8 +2,8 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const WriteFilePlugin = require('write-file-webpack-plugin');
-
-
+const HtmlPlugin = require('html-webpack-plugin')
+var DashboardPlugin = require('webpack-dashboard/plugin');
 
 var entry = {
 		main: ["babel-polyfill", './js/main.js'],
@@ -36,14 +36,16 @@ var entry = {
 
 	html = {
 		test: /\.(html)$/,
-		use: {
-		    loader: 'html-loader',
-		    options: {
-		      	attrs: [':data-src'],
-		      	removeComments: false,
-        		collapseWhitespace: false
-		    }
-		}
+		use: [
+			{
+			    loader: 'html-loader',
+			    options: {
+			      	attrs: [':data-src'],
+			      	removeComments: false,
+	        		collapseWhitespace: false
+			    }
+			},
+		]
 	}
 	img = {
 		test: /\.(jpg|png)$/,
@@ -63,7 +65,13 @@ var entry = {
 
 	plugins = [
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NamedModulesPlugin()
+		new webpack.NamedModulesPlugin(),
+		new HtmlPlugin({
+			filename: './dist/index.html',
+			template: 'templates/index.html',
+			inject: 'body'
+		}),
+		new DashboardPlugin()
 	];
 
 module.exports = {
