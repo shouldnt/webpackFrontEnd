@@ -35,16 +35,14 @@ var entry = {
 	},
 
 	html = {
-		test: /\.(html)$/,
+		test: /\.(ejs)$/,
 		use: [
 			{
-			    loader: 'html-loader',
-			    options: {
-			      	attrs: [':data-src'],
-			      	removeComments: false,
-	        		collapseWhitespace: false
-			    }
+				loader: 'html-loader'
 			},
+			{
+				loader: "ejs-loader"
+			}
 		]
 	}
 	img = {
@@ -67,8 +65,8 @@ var entry = {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NamedModulesPlugin(),
 		new HtmlPlugin({
-			filename: './dist/index.html',
-			template: 'templates/index.html',
+			// filename: '/dist/index.html',
+			template: '!!ejs-render-loader!./src/index.ejs',
 			inject: 'body'
 		}),
 		new DashboardPlugin()
@@ -87,7 +85,7 @@ module.exports = {
 	module: {
 		rules: [
 			img,
-			html,
+			// html,
 			sass,
 			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
 			// { test: /^(?!.*(hot)).*/, loader: "ignore-loader"}
