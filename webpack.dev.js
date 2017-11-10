@@ -4,6 +4,7 @@ const path = require('path');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin')
 var DashboardPlugin = require('webpack-dashboard/plugin');
+const ejsPages = require('./webpack.ejs.js')()
 
 var entry = {
 		main: ["babel-polyfill", './js/main.js'],
@@ -34,25 +35,6 @@ var entry = {
 		]
 	},
 
-	html = {
-		test: /\.(ejs)$/,
-		use: [
-			{
-				loader: 'html-loader'
-			},
-			{
-				loader: "ejs-loader"
-			}
-		]
-	}
-	img = {
-		test: /\.(jpg|png)$/,
-		use: {
-			loader: 'file-loader',
-			options: { name: '[path]/[name].[ext]' }
-		}
-	}
-
 	// devServer config
 	devServer = {
 		hot: true,
@@ -64,11 +46,7 @@ var entry = {
 	plugins = [
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NamedModulesPlugin(),
-		new HtmlPlugin({
-			// filename: '/dist/index.html',
-			template: '!!ejs-render-loader!./src/index.ejs',
-			inject: 'body'
-		}),
+		...ejsPages,
 		new DashboardPlugin()
 	];
 
@@ -84,8 +62,6 @@ module.exports = {
 
 	module: {
 		rules: [
-			img,
-			// html,
 			sass,
 			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
 			// { test: /^(?!.*(hot)).*/, loader: "ignore-loader"}

@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const WriteFilePlugin = require('write-file-webpack-plugin');
+const ejsPages = require('./webpack.ejs.js')()
 
 
 var entry = {
@@ -36,7 +37,8 @@ var entry = {
 				warnings: false,
 				drop_console: false,
 			}
-		})
+		}),
+		...ejsPages
 	]
 
 	module.exports = {

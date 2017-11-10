@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dashboard -- webpack-dev-server --config webpack.dev.js",
+    "start": "webpack-dev-server --config webpack.dev.js",
     "tracking": "webpack --watch",
-    "build": "set NODE_ENV=production&&webpack",
-    "build_mac": "webpack --config webpack.dev.js"
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
