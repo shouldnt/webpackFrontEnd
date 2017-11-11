@@ -30,7 +30,7 @@ module.exports = function() {
 		list.push(
 			new HtmlPlugin({
 				filename: './'+ ejsList[i] + '.html',
-				template: '!!ejs-render-loader!./src/' + ejsList[i] + '.ejs',
+				template: ejsList[i] + '.ejs',
 				inject: 'body'
 			})
 		)

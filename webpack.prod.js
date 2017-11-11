@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-const WriteFilePlugin = require('write-file-webpack-plugin');
 const ejsPages = require('./webpack.ejs.js')()
 
 
@@ -10,9 +9,24 @@ var entry = {
 	},
 
 	output = {
-		filename: 'js/[name].js',
+		filename: './js/[name].js',
 		path: path.resolve(__dirname, 'dist')
-	}
+	},
+
+	html = {
+		test: /\.(ejs)$/,
+		use:[
+			// {
+			// 	loader: 'html-loader',
+			// 	options: {
+			// 		url: false
+			// 	}
+			// },
+			{
+				loader: 'ejs-compiled-loader'
+			}
+		]
+	},
 
 	// watch the sass file
 	sass = {
@@ -31,7 +45,7 @@ var entry = {
 		})
 	},
 	plugins = [
-		new ExtractTextPlugin('/css/[name].css'),
+		new ExtractTextPlugin('./css/[name].css'),
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
 				warnings: false,
@@ -52,6 +66,7 @@ var entry = {
 	module: {
 		rules: [
 			sass,
+			html,
 		{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
 		// { test: /^(?!.*(hot)).*/, loader: "ignore-loader"}
 		],
